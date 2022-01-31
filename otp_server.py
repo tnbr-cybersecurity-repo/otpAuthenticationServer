@@ -1,9 +1,8 @@
 #!usr/bin/env python3
 
-# Accept Input for Username and Password
-# Encrypt Password Input
-# Compare against /etc/shadow
-# Validate if Input exist in /etc/shadow
+# Accept 10 Incoming OTP from CLient
+# Validate against Server Password List
+# Return acknowledgement and Accept or Deny Access
 
 from socket import socket, AF_INET, SOCK_STREAM
 from colorama import Fore as Colors

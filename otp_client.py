@@ -1,4 +1,9 @@
 #!usr/bin/env python3
+
+# Generate 10 OTP using the OTP generator
+# Send OTP to server for validation against Server's Password List
+# Receive acknowledgement of transmission as well as Access Granted or Denied
+
 import time
 from random import random
 import socket
@@ -33,7 +38,7 @@ def client_connection(host, port):
                 print(f'Print the updated Password List\n{password}')
                 message = mysocket.recv(1024)
                 print(f"Message received from the server: {message}")
-
+                time.sleep(3)
             else:
                 message = [] | message == 'quit'
                 mysocket.send(bytes(message.encode('utf-8')))
