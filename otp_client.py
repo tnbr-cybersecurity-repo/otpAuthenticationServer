@@ -1,11 +1,10 @@
 #!usr/bin/env python3
+import time
 from random import random
 import socket
 from colorama import Fore as Colors
 from otpGenerator import generator, passwords
 import random
-
-generator('0810770FF00FF07012')
 
 password = passwords
 
@@ -18,14 +17,26 @@ def client_connection(host, port):
         message = mysocket.recv(1024)
         print(f"Message received from the server: {message}")
 
-        message = random.choice(password)
-        mysocket.send(bytes(message.encode('utf-8')))
-        for otp in range(0, password.__len__()):
-            found = password[otp] == message
+        # message = random.choice(password)
+        while password.__len__() > 1:
+        # Randomly select OTP from list
+            message: hex = random.choice(password)
+            print(f'Print the OTP selected: {message}')
+            # while True:
+            for otp in range(password.__len__()):
+                found = password[otp] == message
+                if found:
+                    break
             if found:
+                mysocket.send(bytes(message.encode('utf-8')))
+                password.pop(otp)
+                print(f'Print the updated Password List\n{password}')
+                time.sleep(3)
+            else:
+                message = quit
+                mysocket.send(bytes(message.encode('utf-8')))
+                print(message)
                 break
-        password.pop(otp)
-
 
 
     except socket.error as error:
@@ -34,4 +45,8 @@ def client_connection(host, port):
         mysocket.close()
 
 
-client_connection(host="127.0.0.1", port=9997)
+# Generate OTP Hex Values
+generator('0810770FF00FF07012', 3)
+
+# Start the Client Connection
+client_connection("127.0.0.1", 8888)
