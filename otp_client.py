@@ -10,6 +10,7 @@ password = passwords
 
 
 def client_connection(host, port):
+    print(password)
     try:
         mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         mysocket.connect((host, port))
@@ -17,9 +18,8 @@ def client_connection(host, port):
         message = mysocket.recv(1024)
         print(f"Message received from the server: {message}")
 
-        # message = random.choice(password)
-        while password.__len__() > 1:
-        # Randomly select OTP from list
+        while password.__len__() > 0:
+            # Randomly select OTP from list
             message: hex = random.choice(password)
             print(f'Print the OTP selected: {message}')
             # while True:
@@ -31,11 +31,13 @@ def client_connection(host, port):
                 mysocket.send(bytes(message.encode('utf-8')))
                 password.pop(otp)
                 print(f'Print the updated Password List\n{password}')
-                time.sleep(3)
+                message = mysocket.recv(1024)
+                print(f"Message received from the server: {message}")
+
             else:
-                message = quit
+                message = [] | message == 'quit'
                 mysocket.send(bytes(message.encode('utf-8')))
-                print(message)
+                print(f"Message received from the server: {message}")
                 break
 
 
@@ -46,7 +48,7 @@ def client_connection(host, port):
 
 
 # Generate OTP Hex Values
-generator('0810770FF00FF07012', 3)
+generator('0810770FF00FF07012', 10)
 
 # Start the Client Connection
-client_connection("127.0.0.1", 8888)
+client_connection("127.0.0.1", 9998)
