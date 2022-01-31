@@ -16,7 +16,7 @@ def generator(keyInitiator, ranger):
 
         hash_key = hashlib.sha256(byte_keyInitiator).hexdigest()
         keyInitiator = hash_key
-        otp = hash_key[:12]
+        otp = hash_key[:6]
         passwords.append(otp)
 
     return passwords
